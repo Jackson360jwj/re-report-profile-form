@@ -75,6 +75,12 @@ details.onfile{border:1px solid var(--line);border-radius:6px;padding:8px 12px;f
 details.onfile pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;max-height:280px;overflow:auto;margin:8px 0 0}
 .loaded{font-size:13px;color:var(--ok)}
 ul.diffs li .txt{white-space:pre-wrap}
+.stdsec h2{font-family:var(--display);font-size:22px;margin:0 0 6px}
+.stdsec h3{font-family:var(--display);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:18px 0 6px}
+.stdsec ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.stdsec p{margin:6px 0;max-width:80ch}
+a{color:var(--accent)}
+.toplink{font-weight:600}
 </style>
 </head>
 <body>
@@ -82,6 +88,7 @@ ul.diffs li .txt{white-space:pre-wrap}
   <header>
     <h1>Report Profile</h1>
     <p>Tell the executive report what is different about a client, or about one show. Write it in plain English at the top. Your instructions are saved in the client's Box profile folder (or the show's folder), and every report reads them first. Most clients need this once; choose "One show only" for the occasional show that runs differently. No report runs until the data is clean: the PM sets the OTIS order to Export Ready, or emails JJ that the data is clean.</p>
+    <p><a class="toplink" href="#standard">What the report does by default, when no instructions are given</a></p>
   </header>
 
   <form id="gate" class="card gate" autocomplete="off">
@@ -99,6 +106,7 @@ ul.diffs li .txt{white-space:pre-wrap}
         <fieldset>
           <div class="q">
             <label class="big" for="ins">Enter descriptions here for instructions you want report building to follow</label>
+            <div class="hint">Only write what should be different. <a href="#standard">See what the report does by default</a>.</div>
             <div class="hint">Write it the way you would explain it to a teammate. For example:
               <ul>
                 <li>Delete unparsed leads from mobile devices, but keep unparsed photo engagements.</li>
@@ -165,6 +173,52 @@ ul.diffs li .txt{white-space:pre-wrap}
     </table></div>
   </section>
   </div>
+
+  <section class="card stdsec" id="standard">
+    <h2>What the report does by default</h2>
+    <p>This is the standard executive report. Every client gets exactly this unless their profile, or one show's instructions, says otherwise. To change any of it, write it in the instructions box at the top of the form.</p>
+
+    <h3>When it runs</h3>
+    <ul>
+      <li>Never before the data is clean. The trigger is the PM setting the OTIS order status to <b>Export Ready</b>, or an email to JJ from the team saying the data is clean.</li>
+      <li>The report job checks every hour from 7 AM to 9 PM Mountain and builds within the hour of the trigger. Anything released overnight builds at 7 AM.</li>
+      <li>The PM (the Acct Mgr on the OTIS order) gets a text when the show ends and a reminder each day until the data is ready. JJ gets one daily list of reports on hold.</li>
+      <li>A show with no OTIS order waits and is flagged as not in OTIS, so an order gets added.</li>
+      <li>The report is due 72 hours after Export Ready.</li>
+    </ul>
+
+    <h3>What it uses</h3>
+    <ul>
+      <li>The data in RE:nvent when it builds, which is the PM's cleaned data: every scan with its station, across all of the client's RE:nvent projects and divisions (for example Commercial and Medical), plus E-Lit, surveys and interactive responses.</li>
+      <li>Traffic Tracker data and images, pulled automatically.</li>
+      <li>Last year's data for the same show, for a year-over-year comparison when it exists.</li>
+      <li>The show's Box folder: logos and colors in 1 Branding (otherwise the client's brand guide or website), lead files a PM put in 2 Badge Scans (used first), and show dates and hours in 5 Event Info (otherwise it researches the show's website).</li>
+    </ul>
+
+    <h3>How it counts</h3>
+    <ul>
+      <li>Every scan in RE:nvent counts. Repeat scans of the same person stay and show as return visits.</li>
+      <li>Unique people are counted once each.</li>
+      <li>NPI is whatever is in RE:nvent (the PM's post-match), shown as a count and a match rate only.</li>
+      <li>Symposium, product theater, MET and session stations are reported apart from the booth. A person at two sessions counts in both, and client staff at these programs count (total attendance).</li>
+      <li>Totals must match the RE:nvent dashboard, or every difference is explained before delivery.</li>
+    </ul>
+
+    <h3>Cleaning</h3>
+    <ul>
+      <li>The report removes nothing. The PM cleans in RE:nvent before Export Ready.</li>
+      <li>Anything that still looks like a test, Reality Engineering staff, client staff at the booth, show organizer staff or a duplicate is listed in the Data Cleaning Log for the PM. Fix it in RE:nvent and ask JJ for a rerun.</li>
+    </ul>
+
+    <h3>What you get</h3>
+    <ul>
+      <li>The standard executive summary deck in the client's branding: full-event KPIs, day by day, year over year, surveys and comments, geography, and recommendations. Scan-only shows (no Traffic Tracker) use the shorter scan report format.</li>
+      <li>No cleaning details and no NPI non-match reasons in the deck.</li>
+      <li>In Box, under the show's 6 Executive Summary folder: the deck, the Data Cleaning Log, and a Cleaning Comparison workbook (Claude's own clean of the raw data next to the PM's, kept for a quarter or two to see whether Claude can take the cleaning over; never in the deck).</li>
+      <li>A text to the PM and JJ when the report is in Box.</li>
+    </ul>
+    <p style="margin-top:14px"><a href="#">Back to the top</a></p>
+  </section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
