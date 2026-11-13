@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Report Profile Interview</title>
+<title>Report Profile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -66,13 +66,22 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
 .tablewrap{overflow-x:auto}
 .mono{font-family:var(--mono);font-size:12px;word-break:break-word}
 .gate{max-width:420px;margin:40px auto;display:grid;gap:12px}
+textarea#ins{min-height:220px;font-size:15px;line-height:1.5}
+.big{font-family:var(--display);font-size:20px;line-height:1.2;color:var(--ink);font-weight:700}
+.hint{font-size:13px;color:var(--muted)}
+.hint ul{margin:4px 0 0;padding-left:18px}
+.banner{border:1px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:10px 12px;font-size:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+details.onfile{border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:14px}
+details.onfile pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;max-height:280px;overflow:auto;margin:8px 0 0}
+.loaded{font-size:13px;color:var(--ok)}
+ul.diffs li .txt{white-space:pre-wrap}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Report Profile Interview</h1>
-    <p>Tell the executive report what is different about a client, or about one show. Leave anything that matches the standard report alone. Your answers are saved as instructions in the client's Box profile folder (or the show's folder), and every report reads them first. Most clients need this once; use "One event only" for the occasional show that runs differently.</p>
+    <h1>Report Profile</h1>
+    <p>Tell the executive report what is different about a client, or about one show. Write it in plain English at the top. Your instructions are saved in the client's Box profile folder (or the show's folder), and every report reads them first. Most clients need this once; choose "One show only" for the occasional show that runs differently. No report runs until the data is clean: the PM sets the OTIS order to Export Ready, or emails JJ that the data is clean.</p>
   </header>
 
   <form id="gate" class="card gate" autocomplete="off">
@@ -88,13 +97,32 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
     <form id="f" class="card" novalidate>
       <div class="sec">
         <fieldset>
-          <legend>1. Who and what</legend>
+          <div class="q">
+            <label class="big" for="ins">Enter descriptions here for instructions you want report building to follow</label>
+            <div class="hint">Write it the way you would explain it to a teammate. For example:
+              <ul>
+                <li>Delete unparsed leads from mobile devices, but keep unparsed photo engagements.</li>
+                <li>Remove J&amp;J staff from the booth, but keep them in product theaters and photo engagements.</li>
+                <li>Our staff sometimes register as J&amp;J or Reality Engineering: remove Chris and Griffen.</li>
+                <li>Compare year over year for scans only, not Traffic Tracker.</li>
+              </ul>
+            </div>
+            <div class="banner" id="savedbanner" hidden><span id="savedmsg"></span>
+              <button type="button" class="secondary" id="usesaved">Use the saved instructions</button></div>
+            <textarea id="ins" placeholder="Type the instructions here"></textarea>
+            <div class="loaded" id="loadedmsg" hidden></div>
+            <details class="onfile" id="onfile" hidden><summary>Also on file in Box for this client (read only)</summary><div id="onfilebody"></div></details>
+          </div>
+        </fieldset>
+      </div>
+      <div class="sec">
+        <fieldset>
+          <legend>Who and what</legend>
           <div class="q">
             <span class="ql">This applies to</span>
             <div class="scope">
-              <label><input type="radio" name="scope" value="company" checked><span><b>The client, every event</b><small>A standing rule for this company</small></span></label>
-              <label><input type="radio" name="scope" value="event"><span><b>One event only</b><small>An exception for one show</small></span></label>
-              <label><input type="radio" name="scope" value="ready"><span><b>The data is ready</b><small>Your clean is done for a show</small></span></label>
+              <label><input type="radio" name="scope" value="company" checked><span><b>The client, every show</b><small>A standing rule for this company</small></span></label>
+              <label><input type="radio" name="scope" value="event"><span><b>One show only</b><small>An exception for one show</small></span></label>
             </div>
           </div>
           <div class="row2">
@@ -102,28 +130,21 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
             <div class="q" id="newclient-wrap" hidden><label class="ql" for="newclient">New client name</label>
               <input type="text" id="newclient" placeholder="Company name as it should appear in Box"></div>
             <div class="q"><label class="ql" for="program">Brand or program (optional)</label>
-              <input type="text" id="program" placeholder="e.g. Symposia, a brand name, Medical"></div>
+              <input type="text" id="program" placeholder="e.g. Symposia, Booth, Medical, a brand"></div>
           </div>
           <div class="row2" id="event-wrap" hidden>
-            <div class="q"><label class="ql" for="show">Show</label><input type="text" id="show" placeholder="e.g. ACR"></div>
+            <div class="q"><label class="ql" for="show">Show</label><input type="text" id="show" list="showlist" placeholder="e.g. ACR"><datalist id="showlist"></datalist></div>
             <div class="q"><label class="ql" for="year">Year</label><input type="text" id="year" inputmode="numeric"></div>
           </div>
           <div class="q"><label class="ql" for="who">Your name</label><input type="text" id="who"></div>
         </fieldset>
       </div>
       <div id="questions"></div>
-      <div class="sec">
-        <fieldset>
-          <legend>Anything else</legend>
-          <div class="q"><label class="ql" for="notes">Other instructions for the report</label>
-            <textarea id="notes" placeholder="Anything the questions above did not cover"></textarea></div>
-        </fieldset>
-      </div>
     </form>
 
     <aside class="card">
-      <h2>Differences from standard</h2>
-      <div class="std">Only these are saved. Everything else follows the standard report.</div>
+      <h2>What gets saved</h2>
+      <div class="std">Your instructions, plus any setting that differs from the standard report.</div>
       <ul class="diffs" id="diffs"></ul>
       <div class="std" style="margin:6px 0 4px">Saves to Box</div>
       <div class="dest" id="dest"></div>
@@ -132,15 +153,15 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
         <button type="button" id="pdf" class="secondary">Download PDF</button>
       </div>
       <div class="msg" id="msg" role="status"></div>
-      <div class="std" style="margin-top:10px">The PDF is a copy you can keep, or save into the Box folder above yourself. The report reads it the same way.</div>
+      <div class="std" style="margin-top:10px">If you change a profile after a report ran, ask JJ for a rerun. The PDF is a copy you can keep, or save into the Box folder above yourself.</div>
     </aside>
   </div>
 
   <section class="card" style="margin-top:20px">
     <h2 style="margin-bottom:8px">Submitted</h2>
     <div class="tablewrap"><table>
-      <thead><tr><th>When</th><th>Client</th><th>Applies to</th><th>By</th><th>Changes</th><th>Status</th></tr></thead>
-      <tbody id="subs"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+      <thead><tr><th>When</th><th>Client</th><th>Applies to</th><th>By</th><th>Status</th></tr></thead>
+      <tbody id="subs"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
     </table></div>
   </section>
   </div>
@@ -149,37 +170,19 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const API="https://re-profile-form.realityengineeringops.workers.dev";
-// Question text the report reads (must match profile_tool.py SETTINGS labels)
+// Question text the report reads (must match profile_tool.py SETTINGS labels and FORM_KEYS)
 const Q=[
- {sec:"2. Before the report runs"},
- {k:"cleaned_by",label:"Who cleans the scans",std:"The report cleans them automatically",opts:["The PM deletes test, staff and empty scans in RE:nvent first","The PM uploads a cleaned file to 2 Badge Scans/AM Cleaned"]},
- {k:"npi",label:"NPI matching",std:"Use what is in the export; ask the PM if it is empty",opts:["The PM runs the NPI post-match in RE:nvent; wait for it","Real-time NPI in the app only","Not used for this client"]},
- {k:"target",label:"Target list matching",std:"Use it if the export has it",opts:["Yes, run in RE:nvent before the report","Not used"]},
- {k:"wait",label:"When the report can start",std:"Right after the show ends",opts:["Wait until the PM says the data is ready"]},
- {k:"divisions",label:"Other RE:nvent projects or divisions to combine",text:1,std:"Just the event's own project",ph:"e.g. Commercial + Medical (photo booths, Med Info)"},
- {sec:"3. Counting"},
- {k:"repeats",label:"Repeat scans of the same person",std:"Count every scan; repeats show as return visits",opts:["Count once per station","Count once per event, keep the newest scan"]},
- {sec:"4. Cleaning"},
- {k:"test",label:"Test records",std:"Remove",opts:["Flag them for the PM instead"]},
- {k:"staff_booth",label:"Client staff at the booth",std:"Remove (matched by email domain)",opts:["Keep","Flag them for the PM"]},
- {k:"staff_programs",label:"Client staff at symposia or product theaters",std:"Remove",opts:["Keep them, and show client vs everyone else","Keep them"]},
- {k:"staff_interactives",label:"Client staff at photo booths and interactives",std:"Remove",opts:["Keep"]},
- {k:"domains",label:"Client staff email domains",text:1,std:"The client's main domain",ph:"e.g. company.com, its.company.com"},
- {k:"organizer",label:"Show organizer staff",std:"Remove",opts:["Keep"]},
- {sec:"5. Programs and sessions"},
- {k:"program_stations",label:"Program stations",text:1,std:"Any station named like a symposium, theater, MET or session",ph:"Station names exactly as in RE:nvent"},
- {k:"sessions",label:"Session names",std:"Not needed",opts:["Export the Staff panel and chart attendance by session"]},
- {sec:"6. What the report shows"},
- {k:"format",label:"Report format",std:"Standard executive summary (one deck per event)",opts:["One deck per brand or program","Scan report only, no Traffic Tracker section","Separate deck and spreadsheet per session"]},
- {k:"yoy",label:"Compare to prior years",std:"Yes, when prior data exists",opts:["No"]},
- {k:"always",label:"Always include",text:1,std:"Standard sections",ph:"e.g. symposium attendance by session"},
- {k:"never",label:"Never include",text:1,std:"Nothing extra left out",ph:"e.g. recommendations slide"},
- {k:"terms",label:"Words the client uses or avoids",text:1,std:"Standard RE:nvent terms",ph:"e.g. say HCPs, not leads"},
- {k:"due",label:"Report due",std:"72 hours after the event ends",opts:["48 hours","1 week","Other (say in notes)"]},
+ {sec:"Settings (leave as standard unless this client differs)"},
+ {k:"trigger",label:"When the report can run",std:"When the PM sets the OTIS order to Export Ready, or emails JJ that the data is clean",
+  opts:["When the PM's cleaned file is in 2 Badge Scans/AM Cleaned","Right after the show ends (nobody cleans first)"]},
+ {k:"repeats",label:"Repeat scans of the same person",std:"Count every scan that is in RE:nvent; repeats show as return visits",
+  opts:["Count once per station","Count once per show, merging everything the person did into one row (stations, notes, surveys, scan count)"]},
+ {k:"staff_programs",label:"Client staff at symposia and product theaters",std:"Kept: total attendance counts",
+  opts:["Remove them","Keep them, and show client staff vs everyone else"]},
 ];
 const $=s=>document.querySelector(s);
 const esc=s=>{const d=document.createElement("div");d.textContent=s==null?"":String(s);return d.innerHTML;};
-let PASS="";
+let PASS="", SAVED=null, LOADKEY="";
 try{ PASS=sessionStorage.getItem("rpf")||""; }catch(e){}
 async function api(path,opts={}){
   const r=await fetch(API+path,{...opts,headers:{"Content-Type":"application/json","X-Passcode":PASS,...(opts.headers||{})}});
@@ -188,15 +191,12 @@ async function api(path,opts={}){
   return j;
 }
 $("#year").value=String(new Date().getFullYear());
-// build questions
 (function(){
   let html="",open=false;
   for(const q of Q){
     if(q.sec){ if(open) html+="</fieldset></div>"; html+=`<div class="sec"><fieldset><legend>${q.sec}</legend>`; open=true; continue; }
     const id="q_"+q.k;
-    const ctl = q.text ? `<input type="text" id="${id}" placeholder="${esc(q.ph||"")}">`
-      : `<select id="${id}"><option value="">Same as standard</option>${q.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`;
-    html+=`<div class="q" id="w_${q.k}"><label class="ql" for="${id}">${esc(q.label)}</label>${ctl}<div class="std">Standard: <b>${esc(q.std)}</b></div></div>`;
+    html+=`<div class="q" id="w_${q.k}"><label class="ql" for="${id}">${esc(q.label)}</label><select id="${id}"><option value="">Same as standard</option>${q.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select><div class="std">Standard: <b>${esc(q.std)}</b></div></div>`;
   }
   $("#questions").innerHTML=html+(open?"</fieldset></div>":"");
 })();
@@ -206,23 +206,63 @@ function setClients(list){
 }
 const scope=()=>document.querySelector('input[name=scope]:checked').value;
 const clientName=()=>clientSel.value==="__new" ? $("#newclient").value.trim() : clientSel.value;
-function answers(){ const a={}; if(scope()==="ready") return a; for(const q of Q){ if(!q.k) continue; const v=$("#q_"+q.k).value.trim(); if(v) a[q.k]=v; } return a; }
+const prog=()=>$("#program").value.trim();
+function answers(){ const a={}; for(const q of Q){ if(!q.k) continue; const v=$("#q_"+q.k).value.trim(); if(v) a[q.k]=v; } return a; }
 function destPath(){
   const c=clientName()||"<Client>", show=$("#show").value.trim()||"<Show>", yr=$("#year").value.trim()||"<Year>";
   if(scope()==="company") return `RES / Executive Reports Data / _Client Profiles / ${c} / Report Instructions.md`;
-  if(scope()==="ready") return `RES / Executive Reports Data / ${show} - ${c} / 5 Event Info / Data Ready.md`;
   return `RES / Executive Reports Data / ${show} - ${c} / 5 Event Info / Report Instructions ${yr}.md`;
 }
+// what is saved in Box for the current client / scope / show / program
+function savedEntry(){
+  if(!SAVED) return null;
+  if(scope()==="company") return SAVED.company && SAVED.company.exists ? SAVED.company : null;
+  const show=$("#show").value.trim().toLowerCase(), yr=$("#year").value.trim();
+  return (SAVED.events||[]).find(e=>e.show.toLowerCase()===show && (!e.year || e.year===yr)) || null;
+}
+let pendingIns="";
+function applySaved(force){
+  const e=savedEntry(), key=[clientName(),scope(),$("#show").value.trim().toLowerCase(),$("#year").value.trim(),prog().toLowerCase()].join("|");
+  if(key===LOADKEY && !force) return; LOADKEY=key;
+  $("#savedbanner").hidden=true; $("#loadedmsg").hidden=true; pendingIns="";
+  if(!e){ if(force!==false){ for(const q of Q){ if(q.k) $("#q_"+q.k).value=""; } } refresh(); return; }
+  for(const q of Q){ if(!q.k) continue; const v=(e.settings||{})[q.k]||""; const sel=$("#q_"+q.k);
+    if(v && ![...sel.options].some(o=>o.value===v)){ const o=document.createElement("option"); o.textContent=v; sel.appendChild(o); }
+    sel.value=v; }
+  const txt=(e.instructions||{})[prog()]||"";
+  const cur=$("#ins").value.trim();
+  if(!cur || cur===txt){ $("#ins").value=txt; if(txt||Object.keys(e.settings||{}).length){ $("#loadedmsg").hidden=false; $("#loadedmsg").textContent="Loaded what is saved in Box. Change anything and save."; } }
+  else if(txt){ pendingIns=txt; $("#savedmsg").textContent="Saved instructions already exist for this. Your typing was kept."; $("#savedbanner").hidden=false; }
+  refresh();
+}
+$("#usesaved").addEventListener("click",()=>{ $("#ins").value=pendingIns; $("#savedbanner").hidden=true; $("#loadedmsg").hidden=false; $("#loadedmsg").textContent="Loaded what is saved in Box."; refresh(); });
+async function loadClient(){
+  SAVED=null; LOADKEY=""; $("#onfile").hidden=true; $("#showlist").innerHTML="";
+  const c=clientSel.value; if(!c || c==="__new"){ applySaved(); return; }
+  try{
+    const {profile}=await api("/profile?client="+encodeURIComponent(c));
+    SAVED=profile;
+    if(profile){
+      $("#showlist").innerHTML=(profile.events||[]).map(e=>`<option value="${esc(e.show)}">${esc(e.year)}</option>`).join("");
+      const other=profile.other||[];
+      if(other.length){ $("#onfile").hidden=false;
+        $("#onfilebody").innerHTML=other.map(o=>`<div style="margin-top:8px"><b>${esc(o.name)}</b><pre>${esc(o.text)}</pre></div>`).join(""); }
+    }
+  }catch(e){}
+  applySaved(true);
+}
+clientSel.addEventListener("change",loadClient);
+for(const id of ["#show","#year","#program"]) $(id).addEventListener("change",()=>applySaved());
+document.querySelectorAll('input[name=scope]').forEach(r=>r.addEventListener("change",()=>applySaved()));
 function refresh(){
   $("#newclient-wrap").hidden = clientSel.value!=="__new";
   $("#event-wrap").hidden = scope()==="company";
-  $("#questions").hidden = scope()==="ready";
   const a=answers(), list=[];
-  if(scope()==="ready") list.push(`<li><span class="k">Data ready</span>The report for this show builds on its next run (7 AM or 9 PM).</li>`);
+  const ins=$("#ins").value.trim();
+  if(ins) list.push(`<li><span class="k">Instructions${prog()?" ("+esc(prog())+")":""}</span><span class="txt">${esc(ins.length>400?ins.slice(0,400)+"…":ins)}</span></li>`);
   for(const q of Q){ if(!q.k) continue; const on=!!a[q.k]; $("#w_"+q.k).classList.toggle("changed",on);
     if(on) list.push(`<li><span class="k">${esc(q.label)}</span>${esc(a[q.k])}</li>`); }
-  const n=$("#notes").value.trim(); if(n) list.push(`<li><span class="k">Other instructions</span>${esc(n)}</li>`);
-  $("#diffs").innerHTML = list.length? list.join("") : '<li class="empty" style="border:0;padding:0">No differences yet. The report would run as standard.</li>';
+  $("#diffs").innerHTML = list.length? list.join("") : '<li class="empty" style="border:0;padding:0">Nothing yet. The report would run as standard.</li>';
   $("#dest").textContent=destPath();
 }
 document.addEventListener("input",refresh); document.addEventListener("change",refresh);
@@ -232,12 +272,12 @@ function validate(){
   if(!c) return "Choose the client first.";
   if(sc!=="company" && !$("#show").value.trim()) return "Add the show name.";
   if(!who) return "Add your name.";
-  if(sc!=="ready" && !Object.keys(answers()).length && !$("#notes").value.trim()) return "Nothing differs from standard, so there is nothing to save.";
+  if(!Object.keys(answers()).length && !$("#ins").value.trim() && !savedEntry()) return "There are no instructions and nothing differs from standard, so there is nothing to save.";
   return "";
 }
 function current(){
-  return {scope:scope(), client:clientName(), program:$("#program").value.trim(), show:$("#show").value.trim(),
-    year:$("#year").value.trim()||String(new Date().getFullYear()), who:$("#who").value.trim(), answers:answers(), notes:$("#notes").value.trim()};
+  return {form:2, scope:scope(), client:clientName(), program:prog(), show:$("#show").value.trim(),
+    year:$("#year").value.trim()||String(new Date().getFullYear()), who:$("#who").value.trim(), answers:answers(), instructions:$("#ins").value.trim()};
 }
 $("#submit").addEventListener("click", async ()=>{
   const m=$("#msg"), bad=validate(); m.className="msg";
@@ -251,8 +291,6 @@ $("#submit").addEventListener("click", async ()=>{
     m.className="msg err"; m.textContent = e.status===401 ? "The passcode was not accepted. Reload and enter it again." : "Could not save. Download the PDF and put it in the Box folder above.";
   }finally{ btn.disabled=false; btn.textContent="Save to Box"; }
 });
-
-// PDF copy: plain "Question: answer" lines so the report can read it from Box
 $("#pdf").addEventListener("click", ()=>{
   const m=$("#msg"), bad=validate(); m.className="msg";
   if(bad){ m.className="msg err"; m.textContent=bad; return; }
@@ -261,37 +299,32 @@ $("#pdf").addEventListener("click", ()=>{
   const line=(t,size=10,bold=false,gap=1.5)=>{ doc.setFont("helvetica",bold?"bold":"normal"); doc.setFontSize(size);
     for(const part of doc.splitTextToSize(t,W)){ if(y>265){doc.addPage();y=18;} doc.text(part,13,y); y+=size*0.45; } y+=gap; };
   const day=new Date().toISOString().slice(0,10);
-  const title = s.scope==="company" ? `Report instructions: ${s.client}` : s.scope==="ready" ? `Data ready: ${s.show} ${s.year} - ${s.client}` : `Report instructions: ${s.show} ${s.year} - ${s.client}`;
-  line(title,16,true,3);
-  line(s.scope==="company" ? "Applies to every show for this client." : s.scope==="ready" ? `The data for ${s.show} ${s.year} is clean and ready. The report job builds this show on its next run.` : `Applies to the ${s.show} ${s.year} report only. The client's profile and the standard report cover everything else.`);
-  line(`Written by ${s.who} on ${day} with the Report Profile form.${s.program?" Brand or program: "+s.program+".":""} Only differences from the standard report are listed.`,9,false,4);
-  if(s.scope!=="ready"){
-    line("Settings",12,true,2);
-    const keys=Object.keys(s.answers);
-    if(!keys.length) line("(none: standard report)");
-    for(const k of keys){ const q=Q.find(x=>x.k===k); line(`${q.label}: ${s.answers[k]}`); }
-    y+=2;
-  }
-  if(s.notes){ line("Notes",12,true,2); line(s.notes); }
-  y+=4; line("Save this file in Box: "+destPath().replace(/ \/ /g,"/").replace(/[^/]+$/,"")+(s.scope==="ready"?"Data Ready.pdf":"(this folder)"),8);
-  const fname = s.scope==="company" ? `Report Instructions - ${s.client}.pdf` : s.scope==="ready" ? `Data Ready ${s.show} ${s.year}.pdf` : `Report Instructions ${s.show} ${s.year} - ${s.client}.pdf`;
+  line(s.scope==="company" ? `Report instructions: ${s.client}` : `Report instructions: ${s.show} ${s.year} - ${s.client}`,16,true,3);
+  line(s.scope==="company" ? "Applies to every show for this client." : `Applies to the ${s.show} ${s.year} report only. The client's profile and the standard report cover everything else.`);
+  line(`Written by ${s.who} on ${day} with the Report Profile form.${s.program?" Brand or program: "+s.program+".":""}`,9,false,4);
+  line("Instructions"+(s.program?` (${s.program})`:""),12,true,2); line(s.instructions||"(none)"); y+=2;
+  line("Settings",12,true,2);
+  const keys=Object.keys(s.answers);
+  if(!keys.length) line("(none: standard report)");
+  for(const k of keys){ const q=Q.find(x=>x.k===k); line(`${q.label}: ${s.answers[k]}`); }
+  y+=4; line("Save this file in Box: "+destPath().replace(/ \/ /g,"/").replace(/[^/]+$/,"")+"(this folder)",8);
+  const fname = s.scope==="company" ? `Report Instructions - ${s.client}.pdf` : `Report Instructions ${s.show} ${s.year} - ${s.client}.pdf`;
   doc.save(fname.replace(/[\\/:*?"<>|]+/g,"-"));
   m.className="msg good"; m.textContent="PDF downloaded: "+fname;
 });
-
 async function loadSubs(){
   const tb=$("#subs");
   try{
     const {subs}=await api("/status");
-    if(!subs.length){ tb.innerHTML='<tr><td colspan="6" class="empty">Nothing submitted yet.</td></tr>'; return; }
+    if(!subs.length){ tb.innerHTML='<tr><td colspan="5" class="empty">Nothing submitted yet.</td></tr>'; return; }
     tb.innerHTML=subs.map(s=>{
       const when=new Date(s.submittedAt).toLocaleString([], {month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
-      const applies = s.scope==="event" ? `${esc(s.show)} ${esc(s.year)} only` : s.scope==="ready" ? `${esc(s.show)} ${esc(s.year)}: data ready` : "Every event";
+      const applies = s.scope==="event" ? `${esc(s.show)} ${esc(s.year)} only` : s.scope==="ready" ? `${esc(s.show)} ${esc(s.year)}: data ready` : "Every show";
       const st = s.status==="applied" ? `<span class="pill done">Saved to Box</span><div class="mono">${esc(s.appliedPath)}</div>`
         : s.status==="error" ? `<span class="pill wait">Problem</span><div class="mono">${esc(s.error)}</div>` : `<span class="pill wait">Saving to Box</span>`;
-      return `<tr><td>${esc(when)}</td><td>${esc(s.client)}${s.program?`<div class="std">${esc(s.program)}</div>`:""}</td><td>${applies}</td><td>${esc(s.who)}</td><td>${s.changes}</td><td>${st}</td></tr>`;
+      return `<tr><td>${esc(when)}</td><td>${esc(s.client)}${s.program?`<div class="std">${esc(s.program)}</div>`:""}</td><td>${applies}</td><td>${esc(s.who)}</td><td>${st}</td></tr>`;
     }).join("");
-  }catch(e){ tb.innerHTML='<tr><td colspan="6" class="empty">Could not load the list right now.</td></tr>'; }
+  }catch(e){ tb.innerHTML='<tr><td colspan="5" class="empty">Could not load the list right now.</td></tr>'; }
 }
 async function openForm(){
   try{
