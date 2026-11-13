@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Report Profile Interview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f5f6f4; --panel:#ffffff; --ink:#1d2421; --muted:#5d6862; --line:#d9dfdb;
+  --accent:#1f6b57; --accent-soft:#e3f0eb; --diff:#b4541a; --diff-soft:#fbeee4; --ok:#2e7d4f;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#131816; --panel:#1b2220; --ink:#e6ece9; --muted:#9aa6a0; --line:#2e3834;
+  --accent:#5cc2a2; --accent-soft:#1f3a31; --diff:#f0a06a; --diff-soft:#3a2a1f; --ok:#6fd39a; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding:24px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:20px}
+header h1{font-family:var(--display);font-size:30px;line-height:1.1;margin:0}
+header p{margin:6px 0 0;color:var(--muted);max-width:75ch}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+@media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:14px;min-width:0}
+legend{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.sec{display:grid;gap:14px;padding-block:16px;border-top:1px solid var(--line)}
+.sec:first-child{border-top:0;padding-top:0}
+.q{display:grid;gap:6px;min-width:0}
+.ql{font-weight:600}
+.std{font-size:13px;color:var(--muted)}
+.std b{font-weight:500;color:var(--ink)}
+select,input[type=text],input[type=password],textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+textarea{min-height:64px;resize:vertical}
+select:focus,input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.q.changed select,.q.changed input[type=text],.q.changed textarea{border-color:var(--diff);background:var(--diff-soft)}
+.scope{display:flex;gap:10px;flex-wrap:wrap}
+.scope label{flex:1 1 200px;border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.scope label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.scope small{display:block;color:var(--muted)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+aside{position:sticky;top:16px}
+aside h2,.card h2{font-family:var(--display);font-size:18px;margin:0 0 4px}
+.dest{font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;word-break:break-word;color:var(--muted)}
+ul.diffs{list-style:none;margin:10px 0;padding:0;display:grid;gap:8px}
+ul.diffs li{border-left:3px solid var(--diff);padding:4px 0 4px 10px;font-size:14px}
+ul.diffs li .k{font-size:12px;color:var(--muted);display:block}
+.empty{color:var(--muted);font-size:14px}
+button{font:inherit;font-weight:600;border:0;border-radius:6px;padding:10px 16px;background:var(--accent);color:var(--panel);cursor:pointer}
+button.secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button[disabled]{opacity:.5;cursor:not-allowed}
+.msg{font-size:14px;margin-top:8px}
+.msg.err{color:var(--diff)} .msg.good{color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.wait{background:var(--diff-soft);color:var(--diff)} .pill.done{background:var(--accent-soft);color:var(--accent)}
+.tablewrap{overflow-x:auto}
+.mono{font-family:var(--mono);font-size:12px;word-break:break-word}
+.gate{max-width:420px;margin:40px auto;display:grid;gap:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Report Profile Interview</h1>
+    <p>Tell the executive report what is different about a client, or about one show. Leave anything that matches the standard report alone. Your answers are saved as instructions in the client's Box profile folder (or the show's folder), and every report reads them first. Most clients need this once; use "One event only" for the occasional show that runs differently.</p>
+  </header>
+
+  <form id="gate" class="card gate" autocomplete="off">
+    <h2>Team passcode</h2>
+    <div class="std">Ask JJ for the passcode.</div>
+    <input type="password" id="passcode" aria-label="Team passcode">
+    <button type="submit">Open the form</button>
+    <div class="msg" id="gatemsg" role="status"></div>
+  </form>
+
+  <div id="app" hidden>
+  <div class="cols">
+    <form id="f" class="card" novalidate>
+      <div class="sec">
+        <fieldset>
+          <legend>1. Who and what</legend>
+          <div class="q">
+            <span class="ql">This applies to</span>
+            <div class="scope">
+              <label><input type="radio" name="scope" value="company" checked><span><b>The client, every event</b><small>A standing rule for this company</small></span></label>
+              <label><input type="radio" name="scope" value="event"><span><b>One event only</b><small>An exception for one show</small></span></label>
+              <label><input type="radio" name="scope" value="ready"><span><b>The data is ready</b><small>Your clean is done for a show</small></span></label>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="q"><label class="ql" for="client">Client</label><select id="client"></select></div>
+            <div class="q" id="newclient-wrap" hidden><label class="ql" for="newclient">New client name</label>
+              <input type="text" id="newclient" placeholder="Company name as it should appear in Box"></div>
+            <div class="q"><label class="ql" for="program">Brand or program (optional)</label>
+              <input type="text" id="program" placeholder="e.g. Symposia, a brand name, Medical"></div>
+          </div>
+          <div class="row2" id="event-wrap" hidden>
+            <div class="q"><label class="ql" for="show">Show</label><input type="text" id="show" placeholder="e.g. ACR"></div>
+            <div class="q"><label class="ql" for="year">Year</label><input type="text" id="year" inputmode="numeric"></div>
+          </div>
+          <div class="q"><label class="ql" for="who">Your name</label><input type="text" id="who"></div>
+        </fieldset>
+      </div>
+      <div id="questions"></div>
+      <div class="sec">
+        <fieldset>
+          <legend>Anything else</legend>
+          <div class="q"><label class="ql" for="notes">Other instructions for the report</label>
+            <textarea id="notes" placeholder="Anything the questions above did not cover"></textarea></div>
+        </fieldset>
+      </div>
+    </form>
+
+    <aside class="card">
+      <h2>Differences from standard</h2>
+      <div class="std">Only these are saved. Everything else follows the standard report.</div>
+      <ul class="diffs" id="diffs"></ul>
+      <div class="std" style="margin:6px 0 4px">Saves to Box</div>
+      <div class="dest" id="dest"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" id="submit">Save to Box</button>
+        <button type="button" id="pdf" class="secondary">Download PDF</button>
+      </div>
+      <div class="msg" id="msg" role="status"></div>
+      <div class="std" style="margin-top:10px">The PDF is a copy you can keep, or save into the Box folder above yourself. The report reads it the same way.</div>
+    </aside>
+  </div>
+
+  <section class="card" style="margin-top:20px">
+    <h2 style="margin-bottom:8px">Submitted</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>When</th><th>Client</th><th>Applies to</th><th>By</th><th>Changes</th><th>Status</th></tr></thead>
+      <tbody id="subs"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+    </table></div>
+  </section>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const API="https://re-profile-form.realityengineeringops.workers.dev";
+// Question text the report reads (must match profile_tool.py SETTINGS labels)
+const Q=[
+ {sec:"2. Before the report runs"},
+ {k:"cleaned_by",label:"Who cleans the scans",std:"The report cleans them automatically",opts:["The PM deletes test, staff and empty scans in RE:nvent first","The PM uploads a cleaned file to 2 Badge Scans/AM Cleaned"]},
+ {k:"npi",label:"NPI matching",std:"Use what is in the export; ask the PM if it is empty",opts:["The PM runs the NPI post-match in RE:nvent; wait for it","Real-time NPI in the app only","Not used for this client"]},
+ {k:"target",label:"Target list matching",std:"Use it if the export has it",opts:["Yes, run in RE:nvent before the report","Not used"]},
+ {k:"wait",label:"When the report can start",std:"Right after the show ends",opts:["Wait until the PM says the data is ready"]},
+ {k:"divisions",label:"Other RE:nvent projects or divisions to combine",text:1,std:"Just the event's own project",ph:"e.g. Commercial + Medical (photo booths, Med Info)"},
+ {sec:"3. Counting"},
+ {k:"repeats",label:"Repeat scans of the same person",std:"Count every scan; repeats show as return visits",opts:["Count once per station","Count once per event, keep the newest scan"]},
+ {sec:"4. Cleaning"},
+ {k:"test",label:"Test records",std:"Remove",opts:["Flag them for the PM instead"]},
+ {k:"staff_booth",label:"Client staff at the booth",std:"Remove (matched by email domain)",opts:["Keep","Flag them for the PM"]},
+ {k:"staff_programs",label:"Client staff at symposia or product theaters",std:"Remove",opts:["Keep them, and show client vs everyone else","Keep them"]},
+ {k:"staff_interactives",label:"Client staff at photo booths and interactives",std:"Remove",opts:["Keep"]},
+ {k:"domains",label:"Client staff email domains",text:1,std:"The client's main domain",ph:"e.g. company.com, its.company.com"},
+ {k:"organizer",label:"Show organizer staff",std:"Remove",opts:["Keep"]},
+ {sec:"5. Programs and sessions"},
+ {k:"program_stations",label:"Program stations",text:1,std:"Any station named like a symposium, theater, MET or session",ph:"Station names exactly as in RE:nvent"},
+ {k:"sessions",label:"Session names",std:"Not needed",opts:["Export the Staff panel and chart attendance by session"]},
+ {sec:"6. What the report shows"},
+ {k:"format",label:"Report format",std:"Standard executive summary (one deck per event)",opts:["One deck per brand or program","Scan report only, no Traffic Tracker section","Separate deck and spreadsheet per session"]},
+ {k:"yoy",label:"Compare to prior years",std:"Yes, when prior data exists",opts:["No"]},
+ {k:"always",label:"Always include",text:1,std:"Standard sections",ph:"e.g. symposium attendance by session"},
+ {k:"never",label:"Never include",text:1,std:"Nothing extra left out",ph:"e.g. recommendations slide"},
+ {k:"terms",label:"Words the client uses or avoids",text:1,std:"Standard RE:nvent terms",ph:"e.g. say HCPs, not leads"},
+ {k:"due",label:"Report due",std:"72 hours after the event ends",opts:["48 hours","1 week","Other (say in notes)"]},
+];
+const $=s=>document.querySelector(s);
+const esc=s=>{const d=document.createElement("div");d.textContent=s==null?"":String(s);return d.innerHTML;};
+let PASS="";
+try{ PASS=sessionStorage.getItem("rpf")||""; }catch(e){}
+async function api(path,opts={}){
+  const r=await fetch(API+path,{...opts,headers:{"Content-Type":"application/json","X-Passcode":PASS,...(opts.headers||{})}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw Object.assign(new Error(j.error||r.status),{status:r.status});
+  return j;
+}
+$("#year").value=String(new Date().getFullYear());
+// build questions
+(function(){
+  let html="",open=false;
+  for(const q of Q){
+    if(q.sec){ if(open) html+="</fieldset></div>"; html+=`<div class="sec"><fieldset><legend>${q.sec}</legend>`; open=true; continue; }
+    const id="q_"+q.k;
+    const ctl = q.text ? `<input type="text" id="${id}" placeholder="${esc(q.ph||"")}">`
+      : `<select id="${id}"><option value="">Same as standard</option>${q.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`;
+    html+=`<div class="q" id="w_${q.k}"><label class="ql" for="${id}">${esc(q.label)}</label>${ctl}<div class="std">Standard: <b>${esc(q.std)}</b></div></div>`;
+  }
+  $("#questions").innerHTML=html+(open?"</fieldset></div>":"");
+})();
+const clientSel=$("#client");
+function setClients(list){
+  clientSel.innerHTML='<option value="">Choose a client</option>'+list.map(c=>`<option>${esc(c)}</option>`).join("")+'<option value="__new">New client…</option>';
+}
+const scope=()=>document.querySelector('input[name=scope]:checked').value;
+const clientName=()=>clientSel.value==="__new" ? $("#newclient").value.trim() : clientSel.value;
+function answers(){ const a={}; if(scope()==="ready") return a; for(const q of Q){ if(!q.k) continue; const v=$("#q_"+q.k).value.trim(); if(v) a[q.k]=v; } return a; }
+function destPath(){
+  const c=clientName()||"<Client>", show=$("#show").value.trim()||"<Show>", yr=$("#year").value.trim()||"<Year>";
+  if(scope()==="company") return `RES / Executive Reports Data / _Client Profiles / ${c} / Report Instructions.md`;
+  if(scope()==="ready") return `RES / Executive Reports Data / ${show} - ${c} / 5 Event Info / Data Ready.md`;
+  return `RES / Executive Reports Data / ${show} - ${c} / 5 Event Info / Report Instructions ${yr}.md`;
+}
+function refresh(){
+  $("#newclient-wrap").hidden = clientSel.value!=="__new";
+  $("#event-wrap").hidden = scope()==="company";
+  $("#questions").hidden = scope()==="ready";
+  const a=answers(), list=[];
+  if(scope()==="ready") list.push(`<li><span class="k">Data ready</span>The report for this show builds on its next run (7 AM or 9 PM).</li>`);
+  for(const q of Q){ if(!q.k) continue; const on=!!a[q.k]; $("#w_"+q.k).classList.toggle("changed",on);
+    if(on) list.push(`<li><span class="k">${esc(q.label)}</span>${esc(a[q.k])}</li>`); }
+  const n=$("#notes").value.trim(); if(n) list.push(`<li><span class="k">Other instructions</span>${esc(n)}</li>`);
+  $("#diffs").innerHTML = list.length? list.join("") : '<li class="empty" style="border:0;padding:0">No differences yet. The report would run as standard.</li>';
+  $("#dest").textContent=destPath();
+}
+document.addEventListener("input",refresh); document.addEventListener("change",refresh);
+
+function validate(){
+  const c=clientName(), sc=scope(), who=$("#who").value.trim();
+  if(!c) return "Choose the client first.";
+  if(sc!=="company" && !$("#show").value.trim()) return "Add the show name.";
+  if(!who) return "Add your name.";
+  if(sc!=="ready" && !Object.keys(answers()).length && !$("#notes").value.trim()) return "Nothing differs from standard, so there is nothing to save.";
+  return "";
+}
+function current(){
+  return {scope:scope(), client:clientName(), program:$("#program").value.trim(), show:$("#show").value.trim(),
+    year:$("#year").value.trim()||String(new Date().getFullYear()), who:$("#who").value.trim(), answers:answers(), notes:$("#notes").value.trim()};
+}
+$("#submit").addEventListener("click", async ()=>{
+  const m=$("#msg"), bad=validate(); m.className="msg";
+  if(bad){ m.className="msg err"; m.textContent=bad; return; }
+  const btn=$("#submit"); btn.disabled=true; btn.textContent="Saving…";
+  try{
+    await api("/submit",{method:"POST",body:JSON.stringify(current())});
+    m.className="msg good"; m.textContent="Saved. It goes into the Box folder above within a few minutes; the Submitted list shows the path when it is there.";
+    loadSubs();
+  }catch(e){
+    m.className="msg err"; m.textContent = e.status===401 ? "The passcode was not accepted. Reload and enter it again." : "Could not save. Download the PDF and put it in the Box folder above.";
+  }finally{ btn.disabled=false; btn.textContent="Save to Box"; }
+});
+
+// PDF copy: plain "Question: answer" lines so the report can read it from Box
+$("#pdf").addEventListener("click", ()=>{
+  const m=$("#msg"), bad=validate(); m.className="msg";
+  if(bad){ m.className="msg err"; m.textContent=bad; return; }
+  if(!window.jspdf){ m.className="msg err"; m.textContent="The PDF tool did not load. Check your connection and reload."; return; }
+  const s=current(), doc=new window.jspdf.jsPDF({unit:"mm",format:"letter"}), W=190; let y=18;
+  const line=(t,size=10,bold=false,gap=1.5)=>{ doc.setFont("helvetica",bold?"bold":"normal"); doc.setFontSize(size);
+    for(const part of doc.splitTextToSize(t,W)){ if(y>265){doc.addPage();y=18;} doc.text(part,13,y); y+=size*0.45; } y+=gap; };
+  const day=new Date().toISOString().slice(0,10);
+  const title = s.scope==="company" ? `Report instructions: ${s.client}` : s.scope==="ready" ? `Data ready: ${s.show} ${s.year} - ${s.client}` : `Report instructions: ${s.show} ${s.year} - ${s.client}`;
+  line(title,16,true,3);
+  line(s.scope==="company" ? "Applies to every show for this client." : s.scope==="ready" ? `The data for ${s.show} ${s.year} is clean and ready. The report job builds this show on its next run.` : `Applies to the ${s.show} ${s.year} report only. The client's profile and the standard report cover everything else.`);
+  line(`Written by ${s.who} on ${day} with the Report Profile form.${s.program?" Brand or program: "+s.program+".":""} Only differences from the standard report are listed.`,9,false,4);
+  if(s.scope!=="ready"){
+    line("Settings",12,true,2);
+    const keys=Object.keys(s.answers);
+    if(!keys.length) line("(none: standard report)");
+    for(const k of keys){ const q=Q.find(x=>x.k===k); line(`${q.label}: ${s.answers[k]}`); }
+    y+=2;
+  }
+  if(s.notes){ line("Notes",12,true,2); line(s.notes); }
+  y+=4; line("Save this file in Box: "+destPath().replace(/ \/ /g,"/").replace(/[^/]+$/,"")+(s.scope==="ready"?"Data Ready.pdf":"(this folder)"),8);
+  const fname = s.scope==="company" ? `Report Instructions - ${s.client}.pdf` : s.scope==="ready" ? `Data Ready ${s.show} ${s.year}.pdf` : `Report Instructions ${s.show} ${s.year} - ${s.client}.pdf`;
+  doc.save(fname.replace(/[\\/:*?"<>|]+/g,"-"));
+  m.className="msg good"; m.textContent="PDF downloaded: "+fname;
+});
+
+async function loadSubs(){
+  const tb=$("#subs");
+  try{
+    const {subs}=await api("/status");
+    if(!subs.length){ tb.innerHTML='<tr><td colspan="6" class="empty">Nothing submitted yet.</td></tr>'; return; }
+    tb.innerHTML=subs.map(s=>{
+      const when=new Date(s.submittedAt).toLocaleString([], {month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+      const applies = s.scope==="event" ? `${esc(s.show)} ${esc(s.year)} only` : s.scope==="ready" ? `${esc(s.show)} ${esc(s.year)}: data ready` : "Every event";
+      const st = s.status==="applied" ? `<span class="pill done">Saved to Box</span><div class="mono">${esc(s.appliedPath)}</div>`
+        : s.status==="error" ? `<span class="pill wait">Problem</span><div class="mono">${esc(s.error)}</div>` : `<span class="pill wait">Saving to Box</span>`;
+      return `<tr><td>${esc(when)}</td><td>${esc(s.client)}${s.program?`<div class="std">${esc(s.program)}</div>`:""}</td><td>${applies}</td><td>${esc(s.who)}</td><td>${s.changes}</td><td>${st}</td></tr>`;
+    }).join("");
+  }catch(e){ tb.innerHTML='<tr><td colspan="6" class="empty">Could not load the list right now.</td></tr>'; }
+}
+async function openForm(){
+  try{
+    const {clients}=await api("/clients");
+    try{ sessionStorage.setItem("rpf",PASS); }catch(e){}
+    setClients(clients); $("#gate").hidden=true; $("#app").hidden=false; refresh(); loadSubs(); setInterval(loadSubs,60000);
+    return true;
+  }catch(e){ return false; }
+}
+$("#gate").addEventListener("submit", async ev=>{
+  ev.preventDefault(); PASS=$("#passcode").value.trim();
+  if(!(await openForm())){ $("#gatemsg").className="msg err"; $("#gatemsg").textContent="That passcode was not accepted."; }
+});
+if(PASS) openForm();
+</script>
+</body>
+</html>
